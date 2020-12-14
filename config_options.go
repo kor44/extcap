@@ -6,6 +6,16 @@ import (
 	"strings"
 )
 
+// Config represents config option which will be shown in Wireshark GUI
+// Output examples
+// arg {number=0}{call=--delay}{display=Time delay}{tooltip=Time delay between packages}{type=integer}{range=1,15}{required=true}
+// arg {number=1}{call=--message}{display=Message}{tooltip=Package message content}{placeholder=Please enter a message here ...}{type=string}
+// arg {number=2}{call=--verify}{display=Verify}{tooltip=Verify package content}{type=boolflag}
+// arg {number=3}{call=--remote}{display=Remote Channel}{tooltip=Remote Channel Selector}{type=selector}
+// arg {number=4}{call=--server}{display=IP address for log server}{type=string}{validation=\\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\b}
+// value {arg=3}{value=if1}{display=Remote1}{default=true}
+// value {arg=3}{value=if2}{display=Remote2}{default=false}
+
 // ConfigOption
 type ConfigOption interface {
 	Call() string
@@ -246,3 +256,9 @@ func (c *ConfigBoolOpt) String() string {
 
 	return c.string("boolflag", params)
 }
+
+// Need implement
+// fileselect
+// selector
+// radio
+// multicheck

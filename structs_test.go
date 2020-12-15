@@ -24,7 +24,7 @@ func TestStringerInterface(t *testing.T) {
 		},
 
 		{"Config Integer option",
-			NewConfigIntegerOpt("delay", "Time delay").SetRange(1, 15).SetRequired(true).SetTooltip("Time delay between packages"),
+			NewConfigIntegerOpt("delay", "Time delay").Range(1, 15).Required(true).Tooltip("Time delay between packages"),
 			"arg {number=0}{call=--delay}{display=Time delay}{type=integer}{tooltip=Time delay between packages}{required=true}{range=1,15}",
 		},
 
@@ -34,12 +34,12 @@ func TestStringerInterface(t *testing.T) {
 		},
 
 		{"Config String option",
-			NewConfigStringOpt("message", "Message").SetTooltip("Package message content").Placeholder("Please enter a message here ..."),
+			NewConfigStringOpt("message", "Message").Tooltip("Package message content").Placeholder("Please enter a message here ..."),
 			"arg {number=0}{call=--message}{display=Message}{type=string}{tooltip=Package message content}{placeholder=Please enter a message here ...}",
 		},
 
 		{"Config Bool option",
-			NewConfigBoolOpt("verify", "Verify").SetTooltip("Verify package content"),
+			NewConfigBoolOpt("verify", "Verify").Tooltip("Verify package content"),
 			"arg {number=0}{call=--verify}{display=Verify}{type=boolflag}{tooltip=Verify package content}",
 		},
 

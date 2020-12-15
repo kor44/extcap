@@ -128,18 +128,18 @@ func (extapp App) Run(arguments []string) {
 			switch opt.(type) {
 			case *ConfigStringOpt:
 				app.Flags = append(app.Flags, &cli.StringFlag{
-					Name:  opt.Call(),
-					Usage: opt.Display(),
+					Name:  opt.call(),
+					Usage: opt.display(),
 				})
 			case *ConfigBoolOpt:
 				app.Flags = append(app.Flags, &cli.BoolFlag{
-					Name:  opt.Call(),
-					Usage: opt.Display(),
+					Name:  opt.call(),
+					Usage: opt.display(),
 				})
 			case *ConfigIntegerOpt:
 				app.Flags = append(app.Flags, &cli.IntFlag{
-					Name:  opt.Call(),
-					Usage: opt.Display(),
+					Name:  opt.call(),
+					Usage: opt.display(),
 				})
 			// case *SelectorConfig:
 			default:

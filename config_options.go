@@ -18,38 +18,38 @@ import (
 
 // ConfigOption
 type ConfigOption interface {
-	Call() string
-	Display() string
-	Tooltip() string
+	call() string
+	display() string
+	tooltip() string
 	setNumber(int)
 }
 
 // common for all options
 type cfg struct {
-	number   int
-	call     string
-	display  string
-	tooltip  string
-	group    string
-	required bool
+	number     int
+	callValue  string
+	displayVal string
+	tooltipVal string
+	group      string
+	required   bool
 }
 
-func (c *cfg) Call() string {
-	return c.call
+func (c *cfg) call() string {
+	return c.callValue
 }
-func (c *cfg) Display() string {
-	return c.display
+func (c *cfg) display() string {
+	return c.displayVal
 }
-func (c *cfg) Tooltip() string {
-	return c.tooltip
+func (c *cfg) tooltip() string {
+	return c.tooltipVal
 }
 
 func (c *cfg) string(optType string, params [][2]string) string {
 	w := new(strings.Builder)
-	fmt.Fprintf(w, "arg {number=%d}{call=--%s}{display=%s}{type=%s}", c.number, c.call, c.display, optType)
+	fmt.Fprintf(w, "arg {number=%d}{call=--%s}{display=%s}{type=%s}", c.number, c.callValue, c.displayVal, optType)
 
-	if c.tooltip != "" {
-		fmt.Fprintf(w, "{tooltip=%s}", c.tooltip)
+	if c.tooltipVal != "" {
+		fmt.Fprintf(w, "{tooltip=%s}", c.tooltipVal)
 	}
 
 	if c.required {
@@ -85,20 +85,14 @@ type ConfigIntegerOpt struct {
 // Create new integer option
 func NewConfigIntegerOpt(call, display string) *ConfigIntegerOpt {
 	opt := &ConfigIntegerOpt{}
-	opt.call = call
-	opt.display = display
+	opt.callValue = call
+	opt.displayVal = display
 
 	return opt
 }
 
-// SetTooltip sets option tooltip
-func (c *ConfigIntegerOpt) SetTooltip(tooltip string) *ConfigIntegerOpt {
-	c.tooltip = tooltip
-	return c
-}
-
 // WithRange sets min and max value for option
-func (c *ConfigIntegerOpt) SetRange(min, max int) *ConfigIntegerOpt {
+func (c *ConfigIntegerOpt) Range(min, max int) *ConfigIntegerOpt {
 	if min >= max {
 		panic("in range max value should be greater min value")
 	}
@@ -112,21 +106,27 @@ func (c *ConfigIntegerOpt) SetRange(min, max int) *ConfigIntegerOpt {
 }
 
 // WithDefault sets default value for INTEGER option
-func (c *ConfigIntegerOpt) WithDefault(val int) *ConfigIntegerOpt {
+func (c *ConfigIntegerOpt) Default(val int) *ConfigIntegerOpt {
 	c.defaultValue = val
 	c.defaultSet = true
 	return c
 }
 
 // WithRequired sets option required
-func (c *ConfigIntegerOpt) SetRequired(val bool) *ConfigIntegerOpt {
+func (c *ConfigIntegerOpt) Required(val bool) *ConfigIntegerOpt {
 	c.required = val
 	return c
 }
 
 // WithGroup sets option's group
-func (c *ConfigIntegerOpt) WithGroup(group string) *ConfigIntegerOpt {
+func (c *ConfigIntegerOpt) Group(group string) *ConfigIntegerOpt {
 	c.group = group
+	return c
+}
+
+// SetTooltip sets option tooltip
+func (c *ConfigIntegerOpt) Tooltip(tooltip string) *ConfigIntegerOpt {
+	c.tooltipVal = tooltip
 	return c
 }
 
@@ -155,28 +155,22 @@ type ConfigStringOpt struct {
 // Create new STRING option
 func NewConfigStringOpt(call, display string) *ConfigStringOpt {
 	opt := &ConfigStringOpt{}
-	opt.call = call
-	opt.display = display
+	opt.callValue = call
+	opt.displayVal = display
 
 	return opt
-}
-
-// SetTooltip sets option tooltip
-func (c *ConfigStringOpt) SetTooltip(tooltip string) *ConfigStringOpt {
-	c.tooltip = tooltip
-	return c
-}
-
-// SetTooltip sets option tooltip
-func (c *ConfigStringOpt) Placeholder(str string) *ConfigStringOpt {
-	c.placeholder = str
-	return c
 }
 
 // Default sets default value for STRING option
 func (c *ConfigStringOpt) Default(val string) *ConfigStringOpt {
 	c.defaultValue = val
 	c.defaultSet = true
+	return c
+}
+
+// SetTooltip sets option tooltip
+func (c *ConfigStringOpt) Placeholder(str string) *ConfigStringOpt {
+	c.placeholder = str
 	return c
 }
 
@@ -189,6 +183,12 @@ func (c *ConfigStringOpt) Required(val bool) *ConfigStringOpt {
 // Validation sets option validation
 func (c *ConfigStringOpt) Validation(str string) *ConfigStringOpt {
 	c.validation = regexp.MustCompile(str)
+	return c
+}
+
+// SetTooltip sets option tooltip
+func (c *ConfigStringOpt) Tooltip(tooltip string) *ConfigStringOpt {
+	c.tooltipVal = tooltip
 	return c
 }
 
@@ -220,22 +220,22 @@ type ConfigBoolOpt struct {
 // Create new BOOL option
 func NewConfigBoolOpt(call, display string) *ConfigBoolOpt {
 	opt := &ConfigBoolOpt{}
-	opt.call = call
-	opt.display = display
+	opt.callValue = call
+	opt.displayVal = display
 
 	return opt
-}
-
-// SetTooltip sets option tooltip
-func (c *ConfigBoolOpt) SetTooltip(tooltip string) *ConfigBoolOpt {
-	c.tooltip = tooltip
-	return c
 }
 
 // Default sets default value option
 func (c *ConfigBoolOpt) Default(val bool) *ConfigBoolOpt {
 	c.defaultValue = val
 	c.defaultSet = true
+	return c
+}
+
+// SetTooltip sets option tooltip
+func (c *ConfigBoolOpt) Tooltip(tooltip string) *ConfigBoolOpt {
+	c.tooltipVal = tooltip
 	return c
 }
 

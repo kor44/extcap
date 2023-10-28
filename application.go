@@ -100,7 +100,7 @@ func (extapp App) Run(arguments []string) {
 
 		&cli.BoolFlag{
 			Name:  "extcap-config",
-			Usage: "llist the additional configuration for an interface",
+			Usage: "list the additional configuration for an interface",
 		},
 
 		&cli.BoolFlag{
